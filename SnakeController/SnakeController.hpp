@@ -33,15 +33,16 @@ public:
     void receive(std::unique_ptr<Event> e) override;
 
 private:
-    bool checkIfRequestedFoodCollidWithSnake(FoodResp requestedFood);
-    bool checkIfRecivedFoodCollidWithSnake(FoodInd receivedFood);
-
     struct Segment
     {
         int x;
         int y;
         int ttl;
     };
+
+    bool checkIfRequestedFoodCollidWithSnake(FoodResp requestedFood);
+    bool checkIfRecivedFoodCollidWithSnake(FoodInd receivedFood);
+    Segment createNewHead();
 
     IPort& m_displayPort;
     IPort& m_foodPort;
