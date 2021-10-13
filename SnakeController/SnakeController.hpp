@@ -45,6 +45,7 @@ private:
     Segment createNewHead() const;
     template <typename FoodEvent>
     void placeNewFood(FoodEvent foodEvent) const;
+    void receiveDirectionEvent(Direction direction);
 
     IPort& m_displayPort;
     IPort& m_foodPort;
