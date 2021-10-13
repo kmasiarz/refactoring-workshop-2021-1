@@ -127,6 +127,16 @@ void Controller::receiveReceivedFoodEvent(FoodInd receivedFood)
     m_foodPosition = std::make_pair(receivedFood.x, receivedFood.y);
 }
 
+void Controller::receivedRequestedFoodEvent(FoodResp requestedFood)
+{
+    if (checkIfRequestedFoodCollidWithSnake(requestedFood)) {
+        m_foodPort.send(std::make_unique<EventT<FoodReq>>());
+    } else {
+        placeNewFood(requestedFood);
+    }
+    m_foodPosition = std::make_pair(requestedFood.x, requestedFood.y);
+}
+
 void Controller::receive(std::unique_ptr<Event> e)
 {
     try {
@@ -193,14 +203,7 @@ void Controller::receive(std::unique_ptr<Event> e)
             } catch (std::bad_cast&) {
                 try {
                     auto requestedFood = *dynamic_cast<EventT<FoodResp> const&>(*e);
-
-                    if (checkIfRequestedFoodCollidWithSnake(requestedFood)) {
-                        m_foodPort.send(std::make_unique<EventT<FoodReq>>());
-                    } else {
-                        placeNewFood(requestedFood);
-                    }
-
-                    m_foodPosition = std::make_pair(requestedFood.x, requestedFood.y);
+                    receivedRequestedFoodEvent(requestedFood);
                 } catch (std::bad_cast&) {
                     throw UnexpectedEventException();
                 }

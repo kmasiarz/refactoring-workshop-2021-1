@@ -47,6 +47,7 @@ private:
     void placeNewFood(FoodEvent foodEvent) const;
     void receiveDirectionEvent(Direction direction);
     void receiveReceivedFoodEvent(FoodInd receivedFood);
+    void receivedRequestedFoodEvent(FoodResp requestedFood);
 
     IPort& m_displayPort;
     IPort& m_foodPort;
