@@ -34,6 +34,7 @@ public:
 
 private:
     bool checkIfRequestedFoodCollidWithSnake(FoodResp requestedFood);
+    bool checkIfRecivedFoodCollidWithSnake(FoodInd receivedFood);
 
     struct Segment
     {
