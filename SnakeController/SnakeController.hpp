@@ -40,9 +40,11 @@ private:
         int ttl;
     };
 
-    bool checkIfRequestedFoodCollidWithSnake(FoodResp requestedFood);
-    bool checkIfRecivedFoodCollidWithSnake(FoodInd receivedFood);
-    Segment createNewHead();
+    bool checkIfRequestedFoodCollidWithSnake(FoodResp requestedFood) const;
+    bool checkIfRecivedFoodCollidWithSnake(FoodInd receivedFood) const;
+    Segment createNewHead() const;
+    template <typename FoodEvent>
+    void placeNewFood(FoodEvent foodEvent) const;
 
     IPort& m_displayPort;
     IPort& m_foodPort;
