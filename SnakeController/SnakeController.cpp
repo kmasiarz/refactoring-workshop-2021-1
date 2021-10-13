@@ -63,6 +63,16 @@ Controller::Controller(IPort& p_displayPort, IPort& p_foodPort, IPort& p_scorePo
     }
 }
 
+bool Controller::checkIfRequestedFoodCollidWithSnake(FoodResp requestedFood) 
+{
+    for (auto const& segment : m_segments) {
+        if (segment.x == requestedFood.x and segment.y == requestedFood.y) {
+            return true;
+        }
+    }
+    return false;
+}
+
 void Controller::receive(std::unique_ptr<Event> e)
 {
     try {
@@ -165,15 +175,7 @@ void Controller::receive(std::unique_ptr<Event> e)
                 try {
                     auto requestedFood = *dynamic_cast<EventT<FoodResp> const&>(*e);
 
-                    bool requestedFoodCollidedWithSnake = false;
-                    for (auto const& segment : m_segments) {
-                        if (segment.x == requestedFood.x and segment.y == requestedFood.y) {
-                            requestedFoodCollidedWithSnake = true;
-                            break;
-                        }
-                    }
-
-                    if (requestedFoodCollidedWithSnake) {
+                    if (checkIfRequestedFoodCollidWithSnake(requestedFood)) {
                         m_foodPort.send(std::make_unique<EventT<FoodReq>>());
                     } else {
                         DisplayInd placeNewFood;
@@ -193,3 +195,4 @@ void Controller::receive(std::unique_ptr<Event> e)
 }
 
 } // namespace Snake
+

@@ -33,6 +33,8 @@ public:
     void receive(std::unique_ptr<Event> e) override;
 
 private:
+    bool checkIfRequestedFoodCollidWithSnake(FoodResp requestedFood);
+
     struct Segment
     {
         int x;
