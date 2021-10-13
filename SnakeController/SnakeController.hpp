@@ -46,6 +46,7 @@ private:
     template <typename FoodEvent>
     void placeNewFood(FoodEvent foodEvent) const;
     void receiveDirectionEvent(Direction direction);
+    void receiveReceivedFoodEvent(FoodInd receivedFood);
 
     IPort& m_displayPort;
     IPort& m_foodPort;
